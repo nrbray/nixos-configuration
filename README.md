@@ -1,4 +1,4 @@
-# Fresh manual flake install from Minimal ISO on local PC
+# [Fresh manual flake install from Minimal ISO on local PC](https://github.com/nrbray/nixos-configuration/blob/main/README.md)
 
 Oh boy!  Whilst in hindsight this is extremely simple (and easier done with the graphical installer), it was hard to find many complete examples of the manual install process to assure me I would be able to do all I wanted:
 
