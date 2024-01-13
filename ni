@@ -204,5 +204,16 @@ ni-auth () { ssh-keygen; echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDqsazlhOhBl
 ni-curl () { . <(curl -sS https://to1.uk/ni); }
 alias ni-tmux="nix --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#tmux"
 gitlog () { git  log --pretty=format:'%C(auto)%h%C(blue) %as%C(auto) %s' --color | head -20; }
+pretty_changes () { git log --graph --name-only --pretty=format:'%C(dim yellow)%ad%Creset %C(magenta)%d %Creset%C(blue)%f %Cgreen(%cr) %C(cyan)- %an%Creset' --date=short . | rg "$2" | head `[ -z "$1" ] && echo "-20" || echo $1 ` ; } # # column -ts'|' | less -r
+changesafoot () { pretty_changes $1 $2 | aha >/tmp/changesafoot.html; chromium --incognito /tmp/changesafoot.html; }
+git_init_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git" ; }
+init_main_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "cd /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; git symbolic-ref HEAD refs/heads/main" ; }
+git_add_origin_on_avingate () { git remote add origin nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; }
+push_to_avingate () { git push -u ssh://nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
+git_log_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "git --git-dir=/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git  log --pretty=format:'%C(auto)%h%C(blue) %as%C(auto) %s' --color | head -20" ; }
+git_match_on_avingate () { ssh nrb@10.100.0.3 "ls -ld /srv/local/git/`git rev-list --parents HEAD | tail -1`*.*"; }
+alias ll='ls -lSFhar' # https://unix.stackexchange.com/questions/30925/in-bash-when-to-alias-when-to-script-and-when-to-write-a-function
+alias ls='ls --color=tty -Ftr' # https://www.mankier.com/1/ls https://github.com/tldr-pages/tldr/blob/master/pages/common/ls.md
+alias lsblk='lsblk -l -t -o PKNAME,KNAME,MODEL,SERIAL,UUID,SIZE,FSTYPE,MOUNTPOINT,PARTLABEL,PARTUUID'
 
 declare -F | head -n 18
