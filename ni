@@ -1,48 +1,7 @@
 #!/usr/bin/env bash
-# . <(curl -sS https://to1.uk/ni.txt); # For more information go to: https://to1.uk/ni
+# . <(curl -sS https://to1.uk/ni); # For more information go to: https://to1.uk/ni
 
 # What's this?  A simple way of collecting cli tools, at any connected box with bash.
-
-0.Create_Installation_Media () { # "$1" = "/dev/disk/by-id/${link-id_of_your_USB_stick}"  
-  if ! [ "${1%/*}" = "/dev/disk/by-id" ]; then echo "Error: Expected parameter 1 \"${1}\" to be like /dev/disk/by-id/\$\{link-id_of_your_USB_stick\}"
-  elif [ -b ${1} ]; then 
-    echo "Installation media is \"${1}\"" 
-    curl --location --continue-at - --remote-name https://channels.nixos.org/nixos-23.11/latest-nixos-minimal-x86_64-linux.iso
-    echo "Press return to continue."; read; sudo dd if=latest-nixos-minimal-x86_64-linux.iso of="$1" bs=4M conv=fsync
-  else echo "Error: Parameter 1 must be a block device.  \"${1}\" is not."; fi
-}
-
-1.Connect_to_wifi_like_this_on_target () { # https://github.com/erictossell/nixflakes/blob/main/docs/minimal-install.md#wireless-networking
-  set -x; [ -z "${1}" ] && echo "Usage: $0 \"local-wifi-or-hostspot-ssid\" \"pre-shared-key\"  " || (
-    sudo systemctl start wpa_supplicant
-    sudo systemctl status wpa_supplicant
-    wpa_cli <<wpa_cli 
-add_network 0
-set_network 0 ssid "BTWholeHome-87M"
-set_network 0 psk "aubergine0"
-set_network 0 key_mgmt WPA-PSK
-enable_network 0
-wpa_cli
-    wpa_cli <<wpa_cli 
-add_network 0
-set_network 0 ssid \"BTWholeHome-87M\"
-set_network 0 psk \"aubergine0\"
-set_network 0 key_mgmt WPA-PSK
-enable_network 0
-wpa_cli
-    wpa_cli <<wpa_cli 
-add_network 0
-set_network 0 ssid 'BTWholeHome-87M'
-set_network 0 psk 'aubergine0'
-set_network 0 key_mgmt WPA-PSK
-enable_network 0
-wpa_cli
-  ); set +x # https://dev.to/rpalo/bash-brackets-quick-reference-4eh6
-}
-
-2.Load_this_file () {
-  . <(curl -sS https://to1.uk/ni.txt)
-}
 
 A.Find_block_device_id-link_for_nixos () { # | ssh x0.at
   alias lsblk="lsblk -o size,fstype,name,uuid,mountpoint,id-link"; lsblk # Table of information about block devices
@@ -89,26 +48,6 @@ E.Format_partitions_uefi_swap_and_root () {
   export root_part_luks_btrfs="/dev/disk/by-uuid/${root_btrfs_uuid}"
 }
 
-Y.Resume_After_B_Then_G () {
-  if [ ! -b "${block_device_for_nixos}" ] || [ -z "${block_device_for_nixos}" ]; then echo "Error: Parameter 1 must be a block device.  \"${block_device_for_nixos}\" is not."; return 1; fi
-  export uefi_partition="-part1" # /boot/efi https://en.wikipedia.org/wiki/EFI_system_partition
-  export swap_partition="-part2" # Fixme: Change from 8200 if encrypted?
-  export otheros_partition="-part3" # Other OS  
-  export nixos_partition="-part4" # System root and file systems  
-  export uefi_part=${block_device_for_nixos}${uefi_partition}
-  export swap_part=${block_device_for_nixos}${swap_partition}
-  export root_part=${block_device_for_nixos}${nixos_partition}
-  root_luks_uuid=$(sudo cryptsetup luksUUID ${root_part})
-  sudo cryptsetup luksOpen ${root_part} ${root_luks_uuid}
-  export root_part_luks="/dev/mapper/${root_luks_uuid}"
-  export root_btrfs_uuid=$(sudo btrfs filesystem show ${root_part_luks}  | grep uuid | awk '{print $4}') # sensitive to number of spaces in volume label  
-  export root_part_luks_btrfs="/dev/disk/by-uuid/${root_btrfs_uuid}"
-  export nixos_mounts="/mnt/nixos_root"
-  swap_luks_uuid=$(sudo cryptsetup luksUUID ${swap_part})
-  sudo cryptsetup luksOpen ${swap_part} ${swap_luks_uuid} 
-  sudo swapon /dev/mapper/${swap_luks_uuid} # works with //dev/mapper not /dev/disk/by-uuid/...
-}
-
 F.BTRFS_Subvolumes_for_root_home_srv () {
   set -x; export nixos_mounts="/mnt/nixos_root"
   [ -d "${nixos_mounts}" ] || sudo mkdir -p ${nixos_mounts} ; sudo mount -t btrfs -o noatime,nodiratime,compress=zstd,space_cache=v2,autodefrag ${root_part_luks_btrfs} ${nixos_mounts} # subvolumes from this master  
@@ -128,14 +67,6 @@ G.Mounts_for_root_home_srv_uefi () {
   # sudo swapon ${swap_part} # Fixme: make encrypted compatible with hibernate
 }
 
-Z.Go_back () {
-  set -x; 
-  [ -e "${nixos_mounts}" ] && sudo umount ${nixos_mounts}/{home,srv,boot/EFI,/}
-  [ -e "${swap_luks_uuid}" ] && sudo cryptsetup close ${swap_luks_uuid}
-  [ -e "${root_luks_uuid}" ] && sudo cryptsetup close ${root_luks_uuid}
-  set +x
-}
-
 H.Swap_encryption () { # https://unix.stackexchange.com/questions/529047/is-there-a-way-to-have-hibernate-and-encrypted-swap-on-nixos
   swap_keyfile=${nixos_mounts}/crypto_keyfile.bin
   sudo dd count=1 bs=512 if=/dev/urandom of=${swap_keyfile} 
@@ -149,7 +80,10 @@ H.Swap_encryption () { # https://unix.stackexchange.com/questions/529047/is-ther
   swap_part_luks="/dev/disk/by-uuid/${swap_luks_uuid}" 
 }
 
-alias I.Install_git="echo \". <(curl -sS https://to1.uk/ni.txt)\"; nix  --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#git"
+I.Install_git_is_an_alias () { 
+  echo "run the alias I.Install_git" 
+}
+alias I.Install_git="echo \". <(curl -sS https://to1.uk/ni)\"; nix  --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#git"
 
 J.Clone_configuration_from_git () {
   git clone https://github.com/nrbray/nixos-configuration.git 
@@ -195,16 +129,77 @@ L.Nixos_Install_Legacy_Non_Flake_untested () {
   set +x
 }
 
-99.Publish_this_file () { 
-  rsync -KLrcvz --info=progress2 ./ni root@aeroplaying.uk:/var/www/to1.uk/public/ni.txt; ssh root@aeroplaying.uk -- chown -R nginx:nginx /var/www/*
+Y.Resume_After_B_Then_G () {
+  if [ ! -b "${block_device_for_nixos}" ] || [ -z "${block_device_for_nixos}" ]; then echo "Error: Parameter 1 must be a block device.  \"${block_device_for_nixos}\" is not."; return 1; fi
+  export uefi_partition="-part1" # /boot/efi https://en.wikipedia.org/wiki/EFI_system_partition
+  export swap_partition="-part2" # Fixme: Change from 8200 if encrypted?
+  export otheros_partition="-part3" # Other OS  
+  export nixos_partition="-part4" # System root and file systems  
+  export uefi_part=${block_device_for_nixos}${uefi_partition}
+  export swap_part=${block_device_for_nixos}${swap_partition}
+  export root_part=${block_device_for_nixos}${nixos_partition}
+  root_luks_uuid=$(sudo cryptsetup luksUUID ${root_part})
+  sudo cryptsetup luksOpen ${root_part} ${root_luks_uuid}
+  export root_part_luks="/dev/mapper/${root_luks_uuid}"
+  export root_btrfs_uuid=$(sudo btrfs filesystem show ${root_part_luks}  | grep uuid | awk '{print $4}') # sensitive to number of spaces in volume label  
+  export root_part_luks_btrfs="/dev/disk/by-uuid/${root_btrfs_uuid}"
+  export nixos_mounts="/mnt/nixos_root"
+  swap_luks_uuid=$(sudo cryptsetup luksUUID ${swap_part})
+  sudo cryptsetup luksOpen ${swap_part} ${swap_luks_uuid} 
+  sudo swapon /dev/mapper/${swap_luks_uuid} # works with //dev/mapper not /dev/disk/by-uuid/...
 }
 
-ni-cat () { curl -sS https://to1.uk/ni.txt; }
-ni-less () { curl -sS https://to1.uk/ni.txt | less; }
-ni-sha256sum () { curl -sS https://to1.uk/ni.txt | sha256sum; }
+Z.Go_back () {
+  set -x; 
+  [ -e "${nixos_mounts}" ] && sudo umount ${nixos_mounts}/{home,srv,boot/EFI,/}
+  [ -e "${swap_luks_uuid}" ] && sudo cryptsetup close ${swap_luks_uuid}
+  [ -e "${root_luks_uuid}" ] && sudo cryptsetup close ${root_luks_uuid}
+  set +x
+}
+
+0.Create_Installation_Media () { # "$1" = "/dev/disk/by-id/${link-id_of_your_USB_stick}"  
+  if ! [ "${1%/*}" = "/dev/disk/by-id" ]; then echo "Error: Expected parameter 1 \"${1}\" to be like /dev/disk/by-id/\$\{link-id_of_your_USB_stick\}"
+  elif [ -b ${1} ]; then 
+    echo "Installation media is \"${1}\"" 
+    curl --location --continue-at - --remote-name https://channels.nixos.org/nixos-23.11/latest-nixos-minimal-x86_64-linux.iso
+    echo "Press return to continue."; read; sudo dd if=latest-nixos-minimal-x86_64-linux.iso of="$1" bs=4M conv=fsync
+  else echo "Error: Parameter 1 must be a block device.  \"${1}\" is not."; fi
+}
+
+1.Connect_to_wifi_like_this_on_target () { # https://github.com/erictossell/nixflakes/blob/main/docs/minimal-install.md#wireless-networking
+  set -x; [ -z "${1}" ] && echo "Usage: $0 \"local-wifi-or-hostspot-ssid\" \"pre-shared-key\"  " || (
+    sudo systemctl start wpa_supplicant
+    sudo systemctl status wpa_supplicant # I think a variation on below worked, escaping or replacing the quotes
+    wpa_cli <<wpa_cli
+add_network 0
+set_network 0 ssid "BTWholeHome-87M"
+set_network 0 psk "aubergine0"
+set_network 0 key_mgmt WPA-PSK
+enable_network 0
+wpa_cli
+  ); set +x # https://dev.to/rpalo/bash-brackets-quick-reference-4eh6
+}
+
+___pull_this_file () {
+  pull_this_file 
+}
+pull_this_file () {
+  . <(curl -sS https://to1.uk/ni)
+}
+
+___publish_this_file () {
+  publish_this_file 
+}
+publish_this_file () { 
+  rsync -KLrcvz --info=progress2 ./ni root@to1.uk:/var/www/to1.uk/public/ni; ssh root@to1.uk -- chown -R nginx:nginx /var/www/*
+}
+
+ni-cat () { curl -sS https://to1.uk/ni; }
+ni-less () { curl -sS https://to1.uk/ni | less; }
+ni-sha256sum () { curl -sS https://to1.uk/ni | sha256sum; }
 ni-auth () { ssh-keygen; echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDqsazlhOhBl2bmUbvnsLLYeuLBfVrLsfOt5nv3FKw9Nui1y7PmiTacU+CEDex3gLAA6KLP8a+o4uPH1y16L/ZJhADqc6cuYcnFIyMWgsO2TfFz5SUmsgSFN3FUZuJ1aMdp+hz0o2pUZIwKVAy/LwvPzvWmTlcgyQOBMWKqD/lm+KKSAV87OcnRhdhDj2/36QxDVI+5dG5yQJ0xR7mcmUxADEtrkH1ONM7a4M+or9T7285+zlXwsxkGDTKHCULHx0gfaUP5Xph4WfHFcmbKWZ+RygUWYHC/I8xHfvP4EFvPIZfv8jppysDx9sLpMsUiLylbkJ298L+Grq/H6QYc/QZG6LDF0dzqgxpAzKWjOeYBiUZ2HQ9nHNDZiWsQb6+Ai8MnRC0irPXFvYkMooNj+9JEZ5LXnm7WA4/Z99wz0Ucd3cYTazpB+H+BkK07wdecsXIC0C/bTsVo4wUSGkrezRv6Im6Mxp4Ag90FDaW3d0OmOQhiXaMsoa1p3LhT+F1zY+c= nrb@nixos' >> ~/.ssh/authorized_keys; }
-ni-curl () { . <(curl -sS https://to1.uk/ni.txt); }
+ni-curl () { . <(curl -sS https://to1.uk/ni); }
 alias ni-tmux="nix --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#tmux"
  
-declare -F | head -n 15
+declare -F | head -n 18
 
