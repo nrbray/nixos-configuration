@@ -8,7 +8,7 @@
   };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
   boot.initrd.luks.devices."partition_uuid".device = "/dev/disk/by-uuid/partition_uuid";
   boot.initrd.luks.devices."partition_uuid".keyFile = "/crypto_keyfile.bin";
