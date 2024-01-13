@@ -13,6 +13,7 @@ B.Export_block_device_for_nixos () { # Has 1 parameter, the 'id-link' from lsblk
   if ! [ "${block_device_for_nixos%/*}" = "/dev/disk/by-id" ]; then echo "Error: \"${block_device_for_nixos}\" should start with /dev/disk/by-id/"
   elif [ -b ${block_device_for_nixos} ]; then echo "NixOS block device is \"${block_device_for_nixos}\"" 
   else echo "Error: Parameter 1 must be a block device.  \"${block_device_for_nixos}\" is not."; fi
+  echo "Next step: C.. for a full run.  Y.. to resume from a previous setup"
 }
 
 C.Create_partitions_uefi_swap_and_root () {
@@ -65,6 +66,7 @@ G.Mounts_for_root_home_srv_uefi () {
   sudo mount -o subvol=@srv,noatime,nodiratime,compress=zstd,space_cache=v2,autodefrag ${root_part_luks_btrfs} ${nixos_mounts}/srv # /srv
   sudo mount ${uefi_part} ${nixos_mounts}/boot # /boot
   # sudo swapon ${swap_part} # Fixme: make encrypted compatible with hibernate
+  echo "Next step: H.. for a full run. I.. to resume from a previous setup"
 }
 
 H.Swap_encryption () { # https://unix.stackexchange.com/questions/529047/is-there-a-way-to-have-hibernate-and-encrypted-swap-on-nixos
@@ -147,6 +149,7 @@ Y.Resume_After_B_Then_G () {
   swap_luks_uuid=$(sudo cryptsetup luksUUID ${swap_part})
   sudo cryptsetup luksOpen ${swap_part} ${swap_luks_uuid} 
   sudo swapon /dev/mapper/${swap_luks_uuid} # works with //dev/mapper not /dev/disk/by-uuid/...
+  echo "Next step: G.. to mount the drives"
 }
 
 Z.Go_back () {
@@ -200,6 +203,6 @@ ni-sha256sum () { curl -sS https://to1.uk/ni | sha256sum; }
 ni-auth () { ssh-keygen; echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDqsazlhOhBl2bmUbvnsLLYeuLBfVrLsfOt5nv3FKw9Nui1y7PmiTacU+CEDex3gLAA6KLP8a+o4uPH1y16L/ZJhADqc6cuYcnFIyMWgsO2TfFz5SUmsgSFN3FUZuJ1aMdp+hz0o2pUZIwKVAy/LwvPzvWmTlcgyQOBMWKqD/lm+KKSAV87OcnRhdhDj2/36QxDVI+5dG5yQJ0xR7mcmUxADEtrkH1ONM7a4M+or9T7285+zlXwsxkGDTKHCULHx0gfaUP5Xph4WfHFcmbKWZ+RygUWYHC/I8xHfvP4EFvPIZfv8jppysDx9sLpMsUiLylbkJ298L+Grq/H6QYc/QZG6LDF0dzqgxpAzKWjOeYBiUZ2HQ9nHNDZiWsQb6+Ai8MnRC0irPXFvYkMooNj+9JEZ5LXnm7WA4/Z99wz0Ucd3cYTazpB+H+BkK07wdecsXIC0C/bTsVo4wUSGkrezRv6Im6Mxp4Ag90FDaW3d0OmOQhiXaMsoa1p3LhT+F1zY+c= nrb@nixos' >> ~/.ssh/authorized_keys; }
 ni-curl () { . <(curl -sS https://to1.uk/ni); }
 alias ni-tmux="nix --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#tmux"
- 
-declare -F | head -n 18
+gitlog () { git  log --pretty=format:'%C(auto)%h%C(blue) %as%C(auto) %s' --color | head -20; }
 
+declare -F | head -n 18
