@@ -85,7 +85,7 @@ H.Swap_encryption () { # https://unix.stackexchange.com/questions/529047/is-ther
 I.Install_git_is_an_alias () { 
   echo "run the alias I.Install_git" 
 }
-alias I.Install_git="echo \". <(curl -sS https://to1.uk/ni)\"; nix  --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#git"
+alias I.Install_git="echo \". <(curl -sS https://to1.uk/ni) # we're now in a sub-shell so pull the scripts in with this incantation\"; nix  --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#git"
 
 J.Clone_configuration_from_git () {
   git clone https://github.com/nrbray/nixos-configuration.git 
