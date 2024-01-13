@@ -2,17 +2,17 @@
 { config, pkgs, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
-  nix = {
-    package = pkgs.nixFlakes; # https://www.breakds.org/post/flake-part-1-packaging/
-    extraOptions =  "experimental-features = nix-command flakes"; # lib.optionalString (config.nix.package == pkgs.nixFlakes) https://discourse.nixos.org/t/using-experimental-nix-features-in-nixos-and-when-they-will-land-in-stable/7401/4
+  nix = { 
+    package = pkgs.nixFlakes; 
+    extraOptions =  "experimental-features = nix-command flakes"; 
   };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
-  boot.initrd.luks.devices."partition_uuid".device = "/dev/disk/by-uuid/partition_uuid";
-  boot.initrd.luks.devices."partition_uuid".keyFile = "/crypto_keyfile.bin";
-  networking.hostName = "dubedarydubedary"; # Define your hostname.
+  boot.initrd.luks.devices."dbae75f6-e73a-483b-8d31-9e9f27833387".device = "/dev/disk/by-uuid/dbae75f6-e73a-483b-8d31-9e9f27833387";
+  boot.initrd.luks.devices."dbae75f6-e73a-483b-8d31-9e9f27833387".keyFile = "/crypto_keyfile.bin";
+  networking.hostName = "dubedary";
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
