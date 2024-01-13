@@ -11,6 +11,10 @@
         system = "x86_64-linux";
         modules = [ ./nixos/exemplry/configuration.nix ]; # if folder only given will use default.nix in that directory
       };
+      avingate = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./nixos/avingate/configuration.nix  ];
+    };
     };
   };
 }
