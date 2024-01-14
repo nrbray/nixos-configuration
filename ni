@@ -209,7 +209,7 @@ changesafoot () { pretty_changes $1 $2 | aha >/tmp/changesafoot.html; chromium -
 git_init_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git" ; }
 init_main_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "cd /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; git symbolic-ref HEAD refs/heads/main" ; }
 git_add_origin_on_avingate () { git remote add origin nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; }
-push_to_avingate () { git push -u ssh://nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
+old_push_to_avingate () { git push -u ssh://nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
 git_log_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "git --git-dir=/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git  log --pretty=format:'%C(auto)%h%C(blue) %as%C(auto) %s' --color | head -20" ; }
 git_match_on_avingate () { ssh nrb@10.100.0.3 "ls -ld /srv/local/git/`git rev-list --parents HEAD | tail -1`*.*"; }
 alias ll='ls -lSFhar' # https://unix.stackexchange.com/questions/30925/in-bash-when-to-alias-when-to-script-and-when-to-write-a-function
@@ -217,3 +217,8 @@ alias ls='ls --color=tty -Ftr' # https://www.mankier.com/1/ls https://github.com
 alias lsblk='lsblk -l -t -o PKNAME,KNAME,MODEL,SERIAL,UUID,SIZE,FSTYPE,MOUNTPOINT,PARTLABEL,PARTUUID'
 
 declare -F | head -n 18
+
+git_log_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "git --git-dir=/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git  log --pretty=format:'%C(auto)%h%C(blue) %as%C(auto) %s' --color | head -20" ; }
+
+push_to_avingate () { git push -u ssh://git@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
+pull_from_avingate () { git pull ssh://git@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
