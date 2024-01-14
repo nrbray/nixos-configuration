@@ -222,3 +222,6 @@ git_log_on_avingate () { $(which ssh) nrb@10.100.0.3 -- "git --git-dir=/srv/loca
 
 push_to_avingate () { git push -u ssh://git@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
 pull_from_avingate () { git pull ssh://git@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
+
+nixos_avingate_init () { git clone ssh://git@10.100.0.3:/srv/local/git/70cebcd0b55ea072df629936f86059abde373b38_nixos-configuration.git /home/nrb/nixos-configuration; }
+nixos_avingate () { cd /home/nrb/nixos-configuration; git pull; nix flake update; nixos-rebuild switch --flake .#avingate; }
