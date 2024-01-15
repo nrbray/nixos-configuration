@@ -32,6 +32,8 @@
   networking.domain = "aerotow.uk";
   networking.firewall.allowedTCPPorts = [  ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
+  networking.firewall.extraCommands = "iptables -t nat -A POSTROUTING -d 10.100.0.3 -p tcp -m tcp --dport 22 -j MASQUERADE";
+  networking.firewall.nat.forwardPorts = [ { proto = "tcp"; sourcePort = 2222; destination = "10.100.0.3:22"; } ];
 
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "prohibit-password";
