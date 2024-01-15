@@ -224,11 +224,12 @@ push_to_avingate () { git push -u ssh://git@10.100.0.3:/srv/local/git/$(git rev-
 pull_from_avingate () { git pull ssh://git@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
 
 nixos_avingate_init () { git clone ssh://git@10.100.0.3:/srv/local/git/70cebcd0b55ea072df629936f86059abde373b38_nixos-configuration.git /home/nrb/nixos-configuration; }
-nixos_avingate_nrb () { cd /home/nrb/nixos-configuration; git pull; nix flake update; }
-nixos_avingate_root () { cd /home/nrb/nixos-configuration; nix flake update; nixos-rebuild switch --flake .#avingate; }
 
 incredible-dubedary () { nixos-rebuild switch --flake ./flake.nix#dubedary --target-host root@192.168.8.117; }
 incredible-greatbar () { nixos-rebuild switch --flake ./flake.nix#greatbar --target-host root@51.195.200.156; } # from mailhost 
 incredible-mailhost () { nixos-rebuild switch --flake ./flake.nix#mailhost --target-host root@to1.uk; } # from greatbar 
 incredible-avingate () { nixos-rebuild switch --flake ./flake.nix#avingate --target-host root@192.168.8.103; }
 incredible-mintanin () { nixos-rebuild switch --flake ./flake.nix#mintanin ; echo "--target-host root@10.100.0.2"; }
+
+git_init_on-greatbar () { ssh root@10.100.0.1 -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; }
+push_to-greatbar_no-track () { git push ssh://git@10.100.0.1:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git main; }
