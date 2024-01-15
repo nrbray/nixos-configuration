@@ -10,7 +10,13 @@ Oh boy!  Whilst in hindsight this is extremely simple (and easier done with the 
 
 I learnt about the chicken and egg: hardware needs to be configured before it can be scanned (by nixos-generate-config) and then used in the Flake (by convention hardware-configuration.nix) to install.  Of course what I wanted was to use the definition of the hardware (in Nix) to do the configuration, https://github.com/nix-community/disko does this but I had finished this before I found it.
 
-This is what I 'made':
+What I found awesome is that this command, (after installing NixOS on the target):
+
+```nixos-rebuild switch --flake ./flake.nix#dubedary --target-host root@192.168.8.117```
+
+Rebuilds, from the git repo, with any changed configuration **from another machine**.  Incredible. 
+
+Before that, to install NixOS, this is what I 'made':
 
 A Flake - https://github.com/nrbray/nixos-configuration/blob/main/flake.nix
 

@@ -46,7 +46,7 @@
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGXa5qbZS3vXSkT4EcJDMp2IBOmeI0pu20wtHEiGb5A" ];  
   };
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ git tmux wireguard-tools ];
+  environment.systemPackages = with pkgs; [ git tmux wireguard-tools ripgrep ];
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "prohibit-password";
   services.sshd.enable = true;

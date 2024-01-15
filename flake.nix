@@ -15,6 +15,18 @@
         system = "x86_64-linux";
         modules = [ ./nixos/avingate/configuration.nix  ];
     };
+      greatbar = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./nixos/greatbar/configuration.nix  ];
+    };
+      mailhost = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./nixos/mailhost/configuration.nix  ];
+    };
+      mintanin = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./nixos/mintanin/configuration.nix  ];
+    };
     };
   };
 }
