@@ -146,6 +146,9 @@ Nigel Bray - EPI2WFY - Hisense HNR320T wants to share folder "sm-a217f_gsa5-phot
   users.users.nrb = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOFe/NHZ9mLV99iOV2eEMcApheSMXh1zQBjNwjr8dWC root@greatbar"
+    ];
   };
   environment.systemPackages = with pkgs; [
     git
