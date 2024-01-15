@@ -231,4 +231,4 @@ incredible-dubedary () { nixos-rebuild switch --flake ./flake.nix#dubedary --tar
 incredible-greatbar () { nixos-rebuild switch --flake ./flake.nix#greatbar --target-host root@51.195.200.156; } # from mailhost 
 incredible-mailhost () { nixos-rebuild switch --flake ./flake.nix#mailhost --target-host root@to1.uk; } # from greatbar 
 incredible-avingate () { nixos-rebuild switch --flake ./flake.nix#avingate --target-host root@192.168.8.103; }
-incredible-mintanin () { nixos-rebuild switch --flake ./flake.nix#mintanin --target-host root@10.100.0.2; }
+incredible-mintanin () { nixos-rebuild switch --flake ./flake.nix#mintanin ; echo "--target-host root@10.100.0.2"; }

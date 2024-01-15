@@ -215,7 +215,7 @@
   };
 
   environment.systemPackages = with pkgs; [ rage rsync git ripgrep jq wget tmux bind host traceroute nmap ethtool pass wireguard-tools
-    nixfmt nixpkgs-fmt rnix-lsp bitwarden-cli distrobox steam-run nix-index nix-alien ]; # https://github.com/NixOS/nixpkgs/issues/271722 
+    nixfmt nixpkgs-fmt rnix-lsp bitwarden-cli distrobox steam-run nix-index ]; # https://github.com/NixOS/nixpkgs/issues/271722 
   
   system.stateVersion = "22.11"; # Did you read the comment?
 }
