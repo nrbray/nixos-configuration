@@ -137,6 +137,8 @@ Nigel Bray - EPI2WFY - Hisense HNR320T wants to share folder "sm-a217f_gsa5-phot
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGXa5qbZS3vXSkT4EcJDMp2IBOmeI0pu20wtHEiGb5A"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbHmtDN6rrYtJoBtCce9jh6b4LHVuCzFqdpIzIEiCHI nrb@dubedary"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII62Xn7RMpaVkB820nigFuRWMBWh0uwheYKmvo28wSBy nrb@avingate"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIED/5na86b59uQF8cfsGAol7Sdutemrb3C5dA5+2sPS6 root@vps-df31287b"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKifjn6NiNH06efGdhhfiPoT3uF15ueVevrFMY+hKXy root@vps-80d02460"
     ];
   };
 
