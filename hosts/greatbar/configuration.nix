@@ -14,6 +14,7 @@
       sha256 = "1ngil2shzkf61qxiqw11awyl81cr7ks2kv3r3k243zz7v2xakm5c";
     })
     ./hardware-configuration.nix # Include the results of the hardware scan.
+    ../../users/git.nix 
   ];
 
   nix = {
@@ -177,24 +178,6 @@
         IPForward = true;
       };
     };
-  };
-
-  users.users.git.group = "git";
-  users.groups.git.members = [ "git" ] ;
-
-  users.users.git = {
-    isSystemUser = true;
-    description = "git user";
-    home = "/srv/local/git/";
-    shell = "${pkgs.git}/bin/git-shell";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGXa5qbZS3vXSkT4EcJDMp2IBOmeI0pu20wtHEiGb5A"
-/*       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbHmtDN6rrYtJoBtCce9jh6b4LHVuCzFqdpIzIEiCHI nrb@dubedary"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII62Xn7RMpaVkB820nigFuRWMBWh0uwheYKmvo28wSBy nrb@avingate"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIED/5na86b59uQF8cfsGAol7Sdutemrb3C5dA5+2sPS6 root@vps-df31287b"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKifjn6NiNH06efGdhhfiPoT3uF15ueVevrFMY+hKXy root@vps-80d02460" */
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAysC3LxSbpg3NcUQDepWWwIVANKKTz/CNBvw/G0OGLL root@mailhost"
-    ];
   };
 
   environment.systemPackages = with pkgs; [ wireguard-tools rsync git ];
