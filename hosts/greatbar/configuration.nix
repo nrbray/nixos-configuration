@@ -13,7 +13,7 @@
       # release="nixos-23.05"; nix-prefetch-url "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz" --unpack
       sha256 = "1ngil2shzkf61qxiqw11awyl81cr7ks2kv3r3k243zz7v2xakm5c";
     })
-    ./hardware-configuration.nix ../../modules/system.nix ../../users/git.nix 
+    ./hardware-configuration.nix ./wireguard.nix ../../modules/system.nix ../../users/git.nix 
   ];
 
   system.stateVersion = "23.11";
@@ -25,8 +25,6 @@
   networking.firewall.extraCommands = "iptables -t nat -A POSTROUTING -d 10.100.0.3 -p tcp -m tcp --dport 22 -j MASQUERADE";
   networking.nat.forwardPorts = [ { proto = "tcp"; sourcePort = 2222; destination = "10.100.0.3:22"; } ];
 
-  services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "prohibit-password";
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDqsazlhOhBl2bmUbvnsLLYeuLBfVrLsfOt5nv3FKw9Nui1y7PmiTacU+CEDex3gLAA6KLP8a+o4uPH1y16L/ZJhADqc6cuYcnFIyMWgsO2TfFz5SUmsgSFN3FUZuJ1aMdp+hz0o2pUZIwKVAy/LwvPzvWmTlcgyQOBMWKqD/lm+KKSAV87OcnRhdhDj2/36QxDVI+5dG5yQJ0xR7mcmUxADEtrkH1ONM7a4M+or9T7285+zlXwsxkGDTKHCULHx0gfaUP5Xph4WfHFcmbKWZ+RygUWYHC/I8xHfvP4EFvPIZfv8jppysDx9sLpMsUiLylbkJ298L+Grq/H6QYc/QZG6LDF0dzqgxpAzKWjOeYBiUZ2HQ9nHNDZiWsQb6+Ai8MnRC0irPXFvYkMooNj+9JEZ5LXnm7WA4/Z99wz0Ucd3cYTazpB+H+BkK07wdecsXIC0C/bTsVo4wUSGkrezRv6Im6Mxp4Ag90FDaW3d0OmOQhiXaMsoa1p3LhT+F1zY+c= nrb@nixos"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDf+wIUgLHwwb19+b8siWPnQMiHSA0Vj/C8jGVvCWUa2 root@vps-6ec22220"
@@ -108,7 +106,6 @@
     # down nginx and opens port 80.
     certificateScheme = "acme-nginx";
   };
-
   
   services.nginx = { # https://nixos.wiki/wiki/Nginx
     enable = true;
@@ -135,39 +132,4 @@
       }; # https://amsl.consulting https://ap.www.namecheap.com/Domains/DomainControlPanel/amsl.consulting/advancedns
     };
   };
-  
-  networking.useNetworkd = true;
-  systemd.network = {
-    enable = true;
-    netdevs = {
-      "50-wg0" = {
-        netdevConfig = {
-          Kind = "wireguard";
-          Name = "wg0";
-          MTUBytes = "1300";
-        };
-        wireguardConfig = {
-          PrivateKeyFile = "/etc/systemd/network/wireguard";
-          ListenPort = 51820;
-        };
-        wireguardPeers = [
-          { wireguardPeerConfig = { PublicKey = "H15gzMI1Q7Au7p8tO+FKeyB08IHdB05KWaP90PXUZ1E="; AllowedIPs = [ "10.100.0.2" ]; }; } # mintanin 
-          { wireguardPeerConfig = { PublicKey = "YIfEx4ONFSjH0po3TLGQkTVrW7c4BaJP49czHzvzAUM="; AllowedIPs = [ "10.100.0.3" ]; }; } # avingate 
-          { wireguardPeerConfig = { PublicKey = "wGBgYqr9B6ieWXAV1ybMUwl11lRtk3PpM0vzYkURy3E="; AllowedIPs = [ "10.100.0.4" ]; }; } # a7cc1 
-          { wireguardPeerConfig = { PublicKey = "sLKSS8bLmyn1a0vtBi23QUn/eJAN5UW1Q7gUU/rPFg4="; AllowedIPs = [ "10.100.0.5" ]; }; } # dubedary 
-          # { publicKey = "K8ZWWNRf6wFhGQ1fpewNelM5jOadRSOK9OpakmfcnV0="; allowedIPs = [ "10.100.0.1/32" ]; } # servmail 
-        ];
-      };
-    };
-    networks.wg0 = {
-      matchConfig.Name = "wg0";
-      address = ["10.100.0.1/24"];            
-      networkConfig = {
-        IPMasquerade = "ipv4";
-        IPForward = true;
-      };
-    };
-  };
-
-  environment.systemPackages = with pkgs; [ wireguard-tools ];
 }
