@@ -13,23 +13,18 @@
       # release="nixos-23.05"; nix-prefetch-url "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz" --unpack
       sha256 = "1ngil2shzkf61qxiqw11awyl81cr7ks2kv3r3k243zz7v2xakm5c";
     })
-    ./hardware-configuration.nix ./wireguard.nix ../../modules/system.nix ../../users/git.nix 
+    ./hardware-configuration.nix 
+    ./trust.nix 
+    ./wireguard.nix 
+    ../../modules/system.nix 
+    ../../users/git.nix 
   ];
-
   system.stateVersion = "23.11";
   zramSwap.enable = true;
   networking.hostName = "greatbar";
   networking.domain = "aerotow.uk";
-  networking.firewall.allowedTCPPorts = [  ];
-  networking.firewall.allowedUDPPorts = [ 51820 ];
   networking.firewall.extraCommands = "iptables -t nat -A POSTROUTING -d 10.100.0.3 -p tcp -m tcp --dport 22 -j MASQUERADE";
   networking.nat.forwardPorts = [ { proto = "tcp"; sourcePort = 2222; destination = "10.100.0.3:22"; } ];
-
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDqsazlhOhBl2bmUbvnsLLYeuLBfVrLsfOt5nv3FKw9Nui1y7PmiTacU+CEDex3gLAA6KLP8a+o4uPH1y16L/ZJhADqc6cuYcnFIyMWgsO2TfFz5SUmsgSFN3FUZuJ1aMdp+hz0o2pUZIwKVAy/LwvPzvWmTlcgyQOBMWKqD/lm+KKSAV87OcnRhdhDj2/36QxDVI+5dG5yQJ0xR7mcmUxADEtrkH1ONM7a4M+or9T7285+zlXwsxkGDTKHCULHx0gfaUP5Xph4WfHFcmbKWZ+RygUWYHC/I8xHfvP4EFvPIZfv8jppysDx9sLpMsUiLylbkJ298L+Grq/H6QYc/QZG6LDF0dzqgxpAzKWjOeYBiUZ2HQ9nHNDZiWsQb6+Ai8MnRC0irPXFvYkMooNj+9JEZ5LXnm7WA4/Z99wz0Ucd3cYTazpB+H+BkK07wdecsXIC0C/bTsVo4wUSGkrezRv6Im6Mxp4Ag90FDaW3d0OmOQhiXaMsoa1p3LhT+F1zY+c= nrb@nixos"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDf+wIUgLHwwb19+b8siWPnQMiHSA0Vj/C8jGVvCWUa2 root@vps-6ec22220"
-  ];
-
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "security@bigfatrepack.org";
   mailserver = {

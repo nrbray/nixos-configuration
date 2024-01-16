@@ -1,5 +1,7 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [ wireguard-tools ];
+  networking.firewall.allowedTCPPorts = [  ];
+  networking.firewall.allowedUDPPorts = [ 51820 ];
   networking.useNetworkd = true;
   systemd.network = {
     enable = true;
