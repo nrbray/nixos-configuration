@@ -5,7 +5,10 @@
   boot.tmp.cleanOnBoot = true;
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
-  console.keyMap = "uk";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "uk";
+  };
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [ rsync git tmux ripgrep ];
   services.openssh.enable = true;

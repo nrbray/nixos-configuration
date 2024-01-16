@@ -1,18 +1,11 @@
-# scp /home/nrb/dir/work/Infra/NixOS/avingate/configuration.nix root@192.168.8.103:/etc/nixos/configuration.nix; git add /home/nrb/dir/work/Infra/NixOS/avingate/configuration.nix; `which ssh` root@192.168.8.103 -- nixos-rebuild switch;
-
-# wlp2s0: link/ether 20:7c:8f:96:d5:f7  inet 192.168.8.103/24
-
 { config, pkgs, lib, ... }: {
   imports = [
-    ./hardware-configuration.nix ./trust.nix ../../users/nrb.nix ../../users/git.nix
-  ]; # Include the results of the hardware scan.
-
-  nix = {
-    package =
-      pkgs.nixFlakes; # https://www.breakds.org/post/flake-part-1-packaging/
-    extraOptions =
-      "experimental-features = nix-command flakes"; # lib.optionalString (config.nix.package == pkgs.nixFlakes) https://discourse.nixos.org/t/using-experimental-nix-features-in-nixos-and-when-they-will-land-in-stable/7401/4
-  };
+    ./hardware-configuration.nix 
+    ./trust.nix 
+    ../../modules/system.nix 
+    ../../users/nrb.nix 
+    ../../users/git.nix
+  ];
   boot = {
     loader.efi.canTouchEfiVariables = true;
     loader.systemd-boot.enable = true;
@@ -24,23 +17,10 @@
         allowDiscards = true;
       };
     };
-    tmp.cleanOnBoot = true; # /tmp is cleaned after each reboot
-    # trace: warning: The option `boot.cleanTmpDir' defined in `/etc/nixos/configuration.nix' has been renamed to `boot.tmp.cleanOnBoot'.
-
-  };
+   };
   boot = { kernel = { sysctl = { "net.ipv4.conf.all.forwarding" = true; }; }; };
-
-  systemd.services.NetworkManager-wait-online.enable =
-    false; # https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = false; # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
-
-  time.timeZone = "Europe/London"; # Set your time zone.
-  i18n.defaultLocale = "en_GB.UTF-8"; # Select internationalisation properties.
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "uk";
-  };
-
   networking.hostName = "avingate"; # Define your hostname.
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
@@ -125,27 +105,7 @@ Nigel Bray - EPI2WFY - Hisense HNR320T wants to share folder "sm-a217f_gsa5-phot
     };
   };
 
-
-
-
-  environment.systemPackages = with pkgs; [
-    git
-    ripgrep
-    jq
-    wget
-    tmux
-    bind
-    host
-    traceroute
-    nmap
-    ethtool
-    pass
-    wireguard-tools
-  ];
-
-  services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "prohibit-password";
-  services.sshd.enable = true;
+  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass wireguard-tools ];
 
   system.stateVersion = "20.09"; # Did you read the comment?
 
