@@ -1,7 +1,7 @@
 
 { config, pkgs, ... }:
 {
-  imports = [ ./hardware-configuration.nix ../../modules/system.nix ];
+  imports = [ ./hardware-configuration.nix ./trust.nix ../../modules/system.nix ../../users/nrb.nix ];
 
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
@@ -32,14 +32,6 @@
     };
   };
 
-  users.users.nrb = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGXa5qbZS3vXSkT4EcJDMp2IBOmeI0pu20wtHEiGb5A" ];  
-  };
-
-  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGXa5qbZS3vXSkT4EcJDMp2IBOmeI0pu20wtHEiGb5A" ];  
   system.stateVersion = "23.11"; # Did you read the comment?
 
 }
