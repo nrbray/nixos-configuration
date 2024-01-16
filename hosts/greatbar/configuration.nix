@@ -1,6 +1,3 @@
-# scp ./NixOS/51.195.200.156/configuration.nix root@51.195.200.156:/etc/nixos/configuration.nix; git add ./NixOS/51.195.200.156/configuration.nix; `which ssh` root@51.195.200.156 -- nixos-rebuild switch; `which ssh` nrb@51.195.200.156
-# clone from file:///./../servmail/configuration.nix
-
 { config, pkgs, lib, ... }:
 
 {
@@ -12,7 +9,7 @@
     ../../modules/system.nix 
     ../../users/git.nix 
   ];
-  kernel.sysctl = { "net.ipv4.conf.all.forwarding" = true; }; 
+    kernel = { sysctl = { "net.ipv4.conf.all.forwarding" = true; }; }; 
   system.stateVersion = "23.11";
   zramSwap.enable = true;
   networking.hostName = "greatbar";
