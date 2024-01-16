@@ -13,20 +13,9 @@
       # release="nixos-23.05"; nix-prefetch-url "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz" --unpack
       sha256 = "1ngil2shzkf61qxiqw11awyl81cr7ks2kv3r3k243zz7v2xakm5c";
     })
-    ./hardware-configuration.nix # Include the results of the hardware scan.
-    ../../users/git.nix 
+    ./hardware-configuration.nix ../../modules/system.nix ../../users/git.nix 
   ];
 
-  nix = {
-    package =
-      pkgs.nixFlakes; # https://www.breakds.org/post/flake-part-1-packaging/
-    extraOptions =
-      "experimental-features = nix-command flakes"; # lib.optionalString (config.nix.package == pkgs.nixFlakes) https://discourse.nixos.org/t/using-experimental-nix-features-in-nixos-and-when-they-will-land-in-stable/7401/4
-  };
-
-  /* environment.defaultPackages = lib.mkForce [ ]; */
-
-  boot.tmp.cleanOnBoot = true;
   system.stateVersion = "23.11";
   zramSwap.enable = true;
   networking.hostName = "greatbar";
@@ -180,5 +169,5 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ wireguard-tools rsync git ];
+  environment.systemPackages = with pkgs; [ wireguard-tools ];
 }
