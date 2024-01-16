@@ -12,6 +12,7 @@
     ../../modules/system.nix 
     ../../users/git.nix 
   ];
+  kernel.sysctl = { "net.ipv4.conf.all.forwarding" = true; }; 
   system.stateVersion = "23.11";
   zramSwap.enable = true;
   networking.hostName = "greatbar";
