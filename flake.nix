@@ -23,6 +23,10 @@
         system = "x86_64-linux";
         modules = [ ./hosts/mailhost/configuration.nix  ];
     };
+      mailhost-old = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/mailhost/configuration-old.nix  ];
+    };
       mintanin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ ./hosts/mintanin/configuration.nix  ];
