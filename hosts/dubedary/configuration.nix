@@ -10,8 +10,8 @@
   networking.hostName = "dubedary";
 
   networking.firewall = {
-    allowedUDPPorts = [ 2200 21027 51820 ];
-    allowedTCPPorts = [ 8384 22000 ];
+    allowedUDPPorts = [ 51820 ];
+    allowedTCPPorts = [  ];
   };
   environment.systemPackages = with pkgs; [ wireguard-tools ];
   networking.wireguard.interfaces = {

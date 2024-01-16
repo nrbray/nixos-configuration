@@ -1,6 +1,8 @@
 # [Fresh manual flake install from Minimal ISO on local PC](https://github.com/nrbray/nixos-configuration)
 
-Oh boy!  Whilst in hindsight this is extremely simple (and easier done with the graphical installer), it was hard to find many complete examples of the manual install process to assure me I would be able to do all I wanted:
+## Learning point 1
+
+Oh boy!  Whilst in hindsight this is extremely simple [and easier done with the graphical installer](https://nixos.org/manual/nixos/stable/#sec-installation-graphical), it was hard to find many complete examples of the manual install process to assure me I would be able to do all I wanted:
 
   - Start with a Flake (to avoid starting non-Flake and switching over without fully understanding how to do it from the beginning)
   - Full disk encryption
@@ -9,6 +11,8 @@ Oh boy!  Whilst in hindsight this is extremely simple (and easier done with the 
   - UEFI (with secure boot planned for the future)
 
 I learnt about the chicken and egg: hardware needs to be configured before it can be scanned (by nixos-generate-config) and then used in the Flake (by convention hardware-configuration.nix) to install.  Of course what I wanted was to use the definition of the hardware (in Nix) to do the configuration, https://github.com/nix-community/disko does this but I had finished this before I found it.
+
+## Learning point 2
 
 What I found awesome is that this command, (after installing NixOS on the target):
 
@@ -46,3 +50,11 @@ Individual steps (shellscript functions) to partition, format and mount the syst
   - ___pull_this_file
 
 I don't know what use this may be to others.  It might be useful as an example.  Otherwise people might help me (and others ) by pointing out where good examples are that I missed.
+
+## Next step modularisation 
+
+In the flake.nix we already see ```modules =[ ...``` and in configuration.nix ```imports = [...```.  
+
+`modules` is just the key used for the initial set of modules, but from there, inside the modules themselves, you bring in others with `imports`.
+
+[The Nix module system provides a parameter, imports, which accepts a list of .nix files and merges all the configuration defined in these files into the current Nix module.](https://nixos-and-flakes.thiscute.world/nixos-with-flakes/modularize-the-configuration)
