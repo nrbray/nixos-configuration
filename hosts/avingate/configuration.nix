@@ -3,32 +3,27 @@
     ./hardware-configuration.nix 
     ./trust.nix 
     ./wireguard.nix 
+    ../../modules/bare_metal.nix  
     ../../modules/system.nix 
     ../../users/nrb.nix 
     ../../users/git.nix
   ];
   boot = {
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot.enable = true;
     initrd.luks.devices = {
       root = {
-        device =
-          "/dev/disk/by-uuid/63f4ee07-4fbc-43dc-ada0-50061d58049c"; # Encrypted drive to be mounted by the bootloader. Path of the device will have to be changed for each install.
+        device = "/dev/disk/by-uuid/63f4ee07-4fbc-43dc-ada0-50061d58049c"; # Encrypted drive to be mounted by the bootloader. Path of the device will have to be changed for each install.
         preLVM = true;
         allowDiscards = true;
       };
     };
+    kernel = { sysctl = { "net.ipv4.conf.all.forwarding" = true; }; }; 
    };
-  boot = { kernel = { sysctl = { "net.ipv4.conf.all.forwarding" = true; }; }; };
   systemd.services.NetworkManager-wait-online.enable = false; # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
   networking.hostName = "avingate"; # Define your hostname.
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
-  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  networking.wireless.networks."Optus_B818_D3DA_5G".psk = "9L24F93320B";
-  
   networking.firewall = {
     allowedUDPPorts = [ 2200 21027 ];
     allowedTCPPorts = [ 8384 22000 ];
