@@ -2,6 +2,7 @@
   imports = [
     ./hardware-configuration.nix 
     ./trust.nix 
+    ./wireguard.nix 
     ../../modules/system.nix 
     ../../users/nrb.nix 
     ../../users/git.nix
@@ -29,36 +30,9 @@
   networking.wireless.networks."Optus_B818_D3DA_5G".psk = "9L24F93320B";
   
   networking.firewall = {
-    allowedUDPPorts = [ 2200 21027 51820 ];
+    allowedUDPPorts = [ 2200 21027 ];
     allowedTCPPorts = [ 8384 22000 ];
   };
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [
-        "10.100.0.3/24"
-      ]; # Determines the IP address and subnet of the client's end of the tunnel interface.
-      listenPort =
-        51820; # to match firewall allowedUDPPorts (without this wg uses random port numbers)
-      privateKeyFile =
-        "/home/nrb/wireguard-keys/private"; # Path to the private key file.
-      peers =
-        [ # umask 077; mkdir ~/wireguard-keys; wg genkey > ~/wireguard-keys/private; wg pubkey < ~/wireguard-keys/private > ~/wireguard-keys/public; cat ~/wireguard-keys/public
-          {
-            publicKey = "K8ZWWNRf6wFhGQ1fpewNelM5jOadRSOK9OpakmfcnV0=";
-            allowedIPs = [ "10.100.0.0/24" ];
-            endpoint = "51.195.200.156:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
-            persistentKeepalive =
-              25; # Send keepalives every 25 seconds. Important to keep NAT tables alive.
-          }
-          # self { publicKey = "YIfEx4ONFSjH0po3TLGQkTVrW7c4BaJP49czHzvzAUM="; allowedIPs = [ "10.100.0.3/32" ]; } # avingate 
-        ];
-    };
-  };
-/* 
-Nigel Bray - EPI2WFY - Hisense HNR320T wants to share folder "LK8000" (LK8000). Add new folder?
-Nigel Bray - EPI2WFY - Hisense HNR320T wants to share folder "itow.uk" (itow.uk). Share this folder?
-Nigel Bray - EPI2WFY - Hisense HNR320T wants to share folder "sm-a217f_gsa5-photos" (sm-a217f_gsa5-photos). Add new folder? 
-*/
   services = { # https://nixos.wiki/wiki/Syncthing
     syncthing = { # https://search.nixos.org/options?channel=23.11&from=0&size=30&sort=relevance&type=packages&query=services.syncthing.settings.options 
 
