@@ -1,4 +1,4 @@
-# [Fresh manual flake install from Minimal ISO on local PC](https://github.com/nrbray/nixos-configuration/blob/main/README.md)
+# [Fresh manual flake install from Minimal ISO on local PC](https://github.com/nrbray/nixos-configuration)
 
 Oh boy!  Whilst in hindsight this is extremely simple (and easier done with the graphical installer), it was hard to find many complete examples of the manual install process to assure me I would be able to do all I wanted:
 
@@ -12,7 +12,7 @@ I learnt about the chicken and egg: hardware needs to be configured before it ca
 
 What I found awesome is that this command, (after installing NixOS on the target):
 
-```nixos-rebuild switch --flake ./flake.nix#dubedary --target-host root@192.168.8.117```
+```nixos-rebuild switch --flake .#dubedary --target-host root@192.168.8.117```
 
 Rebuilds, from the git repo, with any changed configuration **from another machine**.  Incredible. 
 

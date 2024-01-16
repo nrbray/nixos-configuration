@@ -1,31 +1,31 @@
-{ /*  Canonical example? https://github.com/LongerHV/nixos-configuration/blob/master/flake.nix */
+{ /*  Canonical example? https://nixos-and-flakes.thiscute.world/nixos-with-flakes/modularize-the-configuration https://github.com/LongerHV/nixos-configuration/blob/master/flake.nix */
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
 
   outputs = { self, nixpkgs }: {
     nixosConfigurations = {
       dubedary = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./nixos/dubedary/configuration.nix ]; # if folder only given will use default.nix in that directory
+        modules = [ ./hosts/dubedary/configuration.nix ]; # if folder only given will use default.nix in that directory
       };
       exemplry = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./nixos/exemplry/configuration.nix ]; # if folder only given will use default.nix in that directory
+        modules = [ ./hosts/exemplry/configuration.nix ]; # if folder only given will use default.nix in that directory
       };
       avingate = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./nixos/avingate/configuration.nix  ];
+        modules = [ ./hosts/avingate/configuration.nix  ];
     };
       greatbar = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./nixos/greatbar/configuration.nix  ];
+        modules = [ ./hosts/greatbar/configuration.nix  ];
     };
       mailhost = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./nixos/mailhost/configuration.nix  ];
+        modules = [ ./hosts/mailhost/configuration.nix  ];
     };
       mintanin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./nixos/mintanin/configuration.nix  ];
+        modules = [ ./hosts/mintanin/configuration.nix  ];
     };
     };
   };
