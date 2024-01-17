@@ -1,4 +1,4 @@
-{ lib }:
+{ config, lib }:
 {
   imports = [
     # ./server.nix # turn the server off.  Is non-functional and only there to test the configuration for the actual server.
