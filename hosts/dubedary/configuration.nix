@@ -3,8 +3,11 @@
 {
   imports = [ 
     ./hardware-configuration.nix 
+    #./desktop.nix
     ./trust.nix 
     ./wireguard.nix 
+    #./syncthing.nix
+    #./networking.nix
     ../../modules/system.nix 
     ../../modules/bare_metal.nix 
     ../../users/nrb.nix ];
