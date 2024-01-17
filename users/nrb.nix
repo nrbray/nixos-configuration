@@ -1,5 +1,8 @@
 { config, pkgs, ... }: { 
+  users.users.nrb.group = "nrb";
+  users.groups.nrb.members = [ "nrb" ] ;
   users.users.nrb = {
+    description = "Nigel Bray";
     isNormalUser = true;
     packages = with pkgs; [];
     # minimum level of trust on most sensitive machine 
