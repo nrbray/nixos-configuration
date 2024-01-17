@@ -30,8 +30,8 @@
       matchConfig.Name = "wg0";
       address = ["10.100.0.1/24"];            
       networkConfig = {
-        IPMasquerade = "ipv4";
-        IPForward = "ipv4";
+        IPMasquerade = "ipv4"; 
+        IPForward = 1; # = true -and- = "ipv4" fails
       };
     };
   };
