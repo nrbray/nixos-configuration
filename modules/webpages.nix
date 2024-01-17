@@ -11,7 +11,7 @@
         root = "/var/www/aeroplaying.uk";
       }; # https://aeroplaying.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/aeroplaying.uk/advancedns
     virtualHosts = {
-      "https://zobudz.uk" = {
+      "zobudz.uk" = {
         forceSSL = true;
         enableACME = true;
         root = "/var/www/aeroplaying.uk";
