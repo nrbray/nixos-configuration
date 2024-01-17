@@ -2,9 +2,11 @@
 {
   imports = [
     ./hardware-configuration.nix 
-    ./mail.nix 
+    #./mail.nix 
     ./trust.nix 
     ../../modules/system.nix 
+    ../../modules/mail.nix 
+    ../../modules/webpages.nix 
   ];
   system.stateVersion = "23.11";
   zramSwap.enable = true;
