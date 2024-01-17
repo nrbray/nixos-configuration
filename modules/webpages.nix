@@ -1,5 +1,4 @@
 { config, pkgs, ... }: {
-  certificateScheme = "acme-nginx";
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "security@mail.to1.uk";
   networking.firewall.allowedTCPPorts = [ 443 ];

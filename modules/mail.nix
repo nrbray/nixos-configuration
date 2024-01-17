@@ -12,11 +12,11 @@
   ];
   networking.domain = "to1.uk";
   networking.useNetworkd = true;
-  certificateScheme = "acme-nginx"; # Use Let's Encrypt certificates. Note that this needs to set up a stripped down nginx and opens port 80.
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "security@mail.to1.uk";
   mailserver = {
-    enable = true;
+   certificateScheme = "acme-nginx"; # Use Let's Encrypt certificates. Note that this needs to set up a stripped down nginx and opens port 80.
+   enable = true;
     fqdn = "mail.to1.uk";
     # to set up domains MX record + SPF record + DKIM signature + DMARC record + reverse DNS
     domains = [
