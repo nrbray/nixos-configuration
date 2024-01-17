@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [ wireguard-tools ];
   networking.firewall.allowedTCPPorts = [  ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
