@@ -7,15 +7,14 @@
     # ./wireguard.nix 
     # ./syncthing.nix
     # ./networking.nix
-    # ../../modules/bare_metal.nix  
+    ../../modules/bare_metal.nix  
     ../../modules/system.nix 
     # ../../users/nrb.nix 
     # ../../users/git.nix 
   ]; 
   environment.defaultPackages = lib.mkForce [];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
 
@@ -34,14 +33,7 @@
       DNSOverTLS=yes 
       DNS=8.8.8.8 1.1.1.1 2606:4700:4700::1111 1.0.0.1 2606:4700:4700::1001'';
   };
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.wireless.networks."Optus_B818_D3DA".psk = "9L24F93320B";
-  networking.wireless.networks."Optus_B818_D3DA_5G".psk = "9L24F93320B";
-  networking.wireless.networks."BTWholeHome-87M".psk = "aubergine0";
-  networking.wireless.networks."CGC".psk = "CBSIFTBEC";
-  networking.wireless.networks."Nigel's moto g(50)_6318".psk = "aubergine";
-  networking.wireless.networks."A7 CC".psk = "aubergine";
-  networking.wireless.networks."BT-K8CM7P".psk = "bdJknkGvrdquq4";
+
   networking.firewall.allowedTCPPorts = [ 143 465 587 993 8384 22000 ];  # Syncthing ports + wireguard
   networking.firewall.allowedUDPPorts = [ 22000 21027 51820 ];
 
