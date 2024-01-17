@@ -26,7 +26,8 @@
     ungoogled-chromium
     nushell 
     alacritty 
+    fractal 
   ];
   programs.gnupg.agent = { enable = true; }; # https://github.com/NixOS/nixpkgs/issues/210375 # pinentryFlavor = "gtk2"; # enableSSHSupport = true;
-  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nixfmt nixpkgs-fmt rnix-lsp bitwarden-cli distrobox steam-run nix-index ]; # https://github.com/NixOS/nixpkgs/issues/271722   
+  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nixfmt nixpkgs-fmt nil bitwarden-cli distrobox steam-run nix-index ]; # https://github.com/NixOS/nixpkgs/issues/271722   
 }
