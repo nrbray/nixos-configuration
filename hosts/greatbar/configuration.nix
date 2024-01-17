@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./server.nix 
+    # ./server.nix # turn the server off.  Is non-functional and only there to test the configuration for the actual server.
     ./hardware-configuration.nix 
     ./trust.nix 
     ./wireguard.nix 
