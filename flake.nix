@@ -31,6 +31,10 @@
         system = "x86_64-linux";
         modules = [ ./hosts/mintanin/configuration.nix  ];
     };
+      mintanin-old = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./hosts/mintanin/configuration-old.nix  ];
+    };
     };
   };
 }

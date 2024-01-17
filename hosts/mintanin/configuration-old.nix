@@ -1,17 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix 
-    # ./trust.nix 
-    # ./wireguard.nix 
-    # ./syncthing.nix
-    # ./networking.nix
-    # ../../modules/bare_metal.nix  
-    ../../modules/system.nix 
-    # ../../users/nrb.nix 
-    # ../../users/git.nix 
-  ]; 
+  imports = [ ./hardware-configuration.nix ]; # Include the results of the hardware scan.
+
+  nix = {
+    package = pkgs.nixFlakes; # https://www.breakds.org/post/flake-part-1-packaging/
+    extraOptions =  "experimental-features = nix-command flakes"; # lib.optionalString (config.nix.package == pkgs.nixFlakes) https://discourse.nixos.org/t/using-experimental-nix-features-in-nixos-and-when-they-will-land-in-stable/7401/4
+  };
+
   environment.defaultPackages = lib.mkForce [];
 
   boot.loader.systemd-boot.enable = true;
@@ -108,6 +104,10 @@
     };
   };
 
+  time.timeZone = "Europe/London";  # Set your time zone.
+  i18n.defaultLocale = "en_GB.UTF-8";  # Select internationalisation properties.
+  console = { font = "Lat2-Terminus16"; keyMap = "uk"; };  # Configure console keymap
+
   services.xserver.enable = true;  # Enable the X11 windowing system.
   services.xserver.displayManager.gdm.enable = true;  # Enable the GNOME Desktop Environment.
   services.xserver.desktopManager.gnome.enable = true;
@@ -164,6 +164,8 @@
     ];
   };
 
+  nixpkgs.config.allowUnfree = true;  # Allow unfree packages
+
   programs.gnupg.agent = { enable = true; }; # https://github.com/NixOS/nixpkgs/issues/210375 # pinentryFlavor = "gtk2"; # enableSSHSupport = true;
 
   services = { # https://nixos.wiki/wiki/Syncthing
@@ -211,6 +213,9 @@
       };
     };
   };
-  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass wireguard-tools nixfmt nixpkgs-fmt rnix-lsp bitwarden-cli distrobox steam-run nix-index ]; # https://github.com/NixOS/nixpkgs/issues/271722   
+
+  environment.systemPackages = with pkgs; [ rage rsync git ripgrep jq wget tmux bind host traceroute nmap ethtool pass wireguard-tools
+    nixfmt nixpkgs-fmt rnix-lsp bitwarden-cli distrobox steam-run nix-index ]; # https://github.com/NixOS/nixpkgs/issues/271722 
+  
   system.stateVersion = "22.11"; # Did you read the comment?
 }

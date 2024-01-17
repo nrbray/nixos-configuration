@@ -230,4 +230,4 @@ incredible-greatbar () { ssh root@51.195.200.156 -- "cd nixos-configuration/; gi
 incredible-mailhost () { ssh root@to1.uk -- "cd nixos-configuration/; git pull; nixos-rebuild switch --flake .#mailhost"; } 
 incredible-mailhost-old () { ssh root@to1.uk -- "cd nixos-configuration/; git pull; nixos-rebuild switch --flake .#mailhost-old"; } 
 incredible-avingate () { nixos-rebuild switch --flake .#avingate --target-host root@192.168.8.103; }
-incredible-mintanin () { nixos-rebuild switch --flake .#mintanin ; echo "--target-host root@10.100.0.2"; }
+incredible-mintanin () { sudo nixos-rebuild switch --flake .#mintanin ; echo "--target-host root@10.100.0.2"; }
