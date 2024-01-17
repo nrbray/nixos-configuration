@@ -13,7 +13,7 @@
       "zobudz.uk" = {
         forceSSL = true;
         enableACME = true;
-        root = "/var/www/aeroplaying.uk";
+        root = "/var/www/aeroplaying.uk/zobudz";
       }; # https://admin.lcn.com/dns/mod.php?origin=zobudz.uk&ns=lcn.com
       "G-CFRV.aeroplaying.uk" = {
         forceSSL = true;
