@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  # boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   environment.systemPackages = with pkgs; [ wireguard-tools ];
   networking.firewall.allowedTCPPorts = [  ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
@@ -31,7 +31,7 @@
       address = ["10.100.0.1/24"];            
       networkConfig = {
         IPMasquerade = "ipv4"; 
-        IPForward = "1"; # = true -and- = "ipv4" fails
+        # IPForward = true; -and- = "ipv4"; fails
       };
     };
   };
