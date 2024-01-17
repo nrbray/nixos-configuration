@@ -231,3 +231,5 @@ incredible-mailhost () { ssh root@to1.uk -- "cd nixos-configuration/; git pull; 
 incredible-mailhost-old () { ssh root@to1.uk -- "cd nixos-configuration/; git pull; nixos-rebuild switch --flake .#mailhost-old"; } 
 incredible-avingate () { nixos-rebuild switch --flake .#avingate --target-host root@192.168.8.103; }
 incredible-mintanin () { sudo nixos-rebuild switch --flake .#mintanin ; echo "--target-host root@10.100.0.2"; }
+dubedary-incredible () { ssh root@192.168.8.117 -- "cd ~nrb/nixos-configuration/; sudo -u nrb git pull ssh://git@192.168.8.103:/srv/local/git/70cebcd0b55ea072df629936f86059abde373b38_nixos-configuration.git; nixos-rebuild switch --flake .#dubedary"; }
+
