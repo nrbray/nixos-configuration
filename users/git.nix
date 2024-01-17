@@ -14,6 +14,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIED/5na86b59uQF8cfsGAol7Sdutemrb3C5dA5+2sPS6 root@vps-df31287b"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKifjn6NiNH06efGdhhfiPoT3uF15ueVevrFMY+hKXy root@vps-80d02460"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAysC3LxSbpg3NcUQDepWWwIVANKKTz/CNBvw/G0OGLL root@mailhost"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsIPH42lj/lj6MAdr8hyKWdBA+fpPTxPmxdD9lxkvJ6 root@dubedary"
     ];
   };
 }
