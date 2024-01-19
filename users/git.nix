@@ -15,6 +15,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKifjn6NiNH06efGdhhfiPoT3uF15ueVevrFMY+hKXy root@vps-80d02460"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAysC3LxSbpg3NcUQDepWWwIVANKKTz/CNBvw/G0OGLL root@mailhost"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsIPH42lj/lj6MAdr8hyKWdBA+fpPTxPmxdD9lxkvJ6 root@dubedary"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHGXa5qbZS3vXSkT4EcJDMp2IBOmeI0pu20wtHEiGb5A NigelBray@gitlab.com"
     ];
   };
 }
