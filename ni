@@ -238,5 +238,6 @@ git_chown_on_avingate () {
   git remote set-url origin ssh://git@192.168.8.103:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
   git remote set-url --add --push origin ssh://git@192.168.8.103:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
   git remote set-url --delete --push origin ssh://nrb@192.168.8.103:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
+  git remote set-url --delete --push origin ssh://nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
 }
 
