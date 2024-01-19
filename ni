@@ -233,3 +233,10 @@ incredible-avingate () { [ -z "$(git status --porcelain)" ] && (git push; nixos-
 incredible-mintanin () { [ -z "$(git status --porcelain)" ] && (git push; sudo nixos-rebuild switch --flake .#mintanin ; echo "--target-host root@10.100.0.2";); }
 dubedary-incredible () { [ -z "$(git status --porcelain)" ] && (git push; ssh root@192.168.8.117 -- "cd ~nrb/nixos-configuration/; sudo -u nrb git pull ssh://git@192.168.8.103:/srv/local/git/70cebcd0b55ea072df629936f86059abde373b38_nixos-configuration.git; nixos-rebuild switch --flake .#dubedary";); }
 
+git_chown_on_avingate () { 
+  ssh root@10.100.0.3 -- "chown git:git /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git" ; 
+  git remote set-url origin ssh://git@192.168.8.103:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
+  git remote set-url --add --push origin ssh://git@192.168.8.103:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
+  git remote set-url --delete --push origin ssh://nrb@192.168.8.103:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
+}
+
