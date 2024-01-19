@@ -19,6 +19,7 @@
     bitwarden 
     alacritty 
     fractal
+    xclip
   ];
   programs.gnupg.agent = { enable = true; }; # https://github.com/NixOS/nixpkgs/issues/210375 # pinentryFlavor = "gtk2"; # enableSSHSupport = true;
   environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nil bitwarden-cli ]; # https://github.com/NixOS/nixpkgs/issues/271722   
