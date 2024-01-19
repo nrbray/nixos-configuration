@@ -17,7 +17,7 @@
           PrivateKeyFile = "/etc/systemd/network/wireguard";
           ListenPort = 51820;
         };
-        wireguardPeers = [
+        wireguardPeers = [ # https://utcc.utoronto.ca/~cks/space/blog/linux/LinuxIpFwmarkMasks
           { wireguardPeerConfig = { PublicKey = "H15gzMI1Q7Au7p8tO+FKeyB08IHdB05KWaP90PXUZ1E="; AllowedIPs = [ "10.100.0.2" ]; }; } # mintanin 
           { wireguardPeerConfig = { PublicKey = "YIfEx4ONFSjH0po3TLGQkTVrW7c4BaJP49czHzvzAUM="; AllowedIPs = [ "10.100.0.3" ]; }; } # avingate 
           { wireguardPeerConfig = { PublicKey = "wGBgYqr9B6ieWXAV1ybMUwl11lRtk3PpM0vzYkURy3E="; AllowedIPs = [ "10.100.0.4" ]; }; } # a7cc1 
