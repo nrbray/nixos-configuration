@@ -5,7 +5,7 @@
   i18n.defaultLocale = "en_GB.UTF-8";  # Select internationalisation properties.
   console = { keyMap = "uk"; };  # Configure console keymap # font = "Lat2-Terminus16"; 
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ rage rsync git tmux ripgrep kalker ];
+  environment.systemPackages = with pkgs; [ rage rsync git tmux mosh ripgrep kalker ];
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
