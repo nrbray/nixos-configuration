@@ -39,6 +39,7 @@
       "hghistory.aeroplaying.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
       "hghistory.aerotow.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
       "hghistory.9up.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
+      "nigel.to1.uk" = { forceSSL = true; enableACME = true; root = "/var/www/aeroplaying.uk/Nigel"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
     };
   };
 }
