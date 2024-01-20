@@ -35,11 +35,10 @@
         enableACME = true;
         root = "/var/www/to1.uk/public";
       }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
-      "hghistory.to1.uk" = {
-        forceSSL = true;
-        enableACME = true;
-        root = "/var/www/hghistory";
-      }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
+      "hghistory.to1.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
+      "hghistory.aeroplaying.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
+      "hghistory.aerotow.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
+      "hghistory.9up.uk" = { forceSSL = true; enableACME = true; root = "/var/www/hghistory"; }; # https://to1.uk https://ap.www.namecheap.com/Domains/DomainControlPanel/to1.uk/advancedns
     };
   };
 }
