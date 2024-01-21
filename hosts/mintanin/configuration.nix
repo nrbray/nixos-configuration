@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, myappattribute, ... }:
 {
   imports = [
     ./hardware-configuration.nix 
@@ -10,8 +10,9 @@
     ../../modules/bare_metal.nix  
     ../../modules/system.nix 
     ../../users/nrb.nix 
-    # ../../users/git.nix 
+    ../../users/git.nix 
   ]; 
+  environment.systemPackages = with pkgs; [ jq  ] ++ [ myappattribute.packages.x86_64-linux.default ];
   boot.initrd.luks.devices."luks-20a1f166-1f1d-4d97-99c2-a9260c817e32".device = "/dev/disk/by-uuid/20a1f166-1f1d-4d97-99c2-a9260c817e32";  # Enable swap on luks
   boot.initrd.luks.devices."luks-20a1f166-1f1d-4d97-99c2-a9260c817e32".keyFile = "/crypto_keyfile.bin";
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };

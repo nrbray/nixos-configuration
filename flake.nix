@@ -1,7 +1,9 @@
 { /*  Canonical example? https://nixos-and-flakes.thiscute.world/nixos-with-flakes/modularize-the-configuration https://github.com/LongerHV/nixos-configuration/blob/master/flake.nix */
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-
-  outputs = { self, nixpkgs }: {
+  inputs = {
+      myappattribute.url="git+file:///home/nrb/dir/work/myappflakedir";
+  };
+  outputs = { self, nixpkgs, myappattribute }: {
     nixosConfigurations = {
       dubedary = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -29,6 +31,9 @@
     };
       mintanin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        # You need to do:
+        specialArgs = { inherit myappattribute; };
+        # in your flake.nix (around where you have your `modules`). Otherwise it won't be passed into other modules as args and you are trying to use it there.
         modules = [ ./hosts/mintanin/configuration.nix  ];
     };
       mintanin-old = nixpkgs.lib.nixosSystem {
