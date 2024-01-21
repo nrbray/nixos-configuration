@@ -15,7 +15,7 @@
   users.users.nrb.packages = with pkgs; [
     tdesktop 
     gnome3.geary 
-    lapce
+    lapce vscodiuim 
     bitwarden 
     alacritty 
     fractal
