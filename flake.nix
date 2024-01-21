@@ -7,6 +7,7 @@
     nixosConfigurations = {
       dubedary = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit myappattribute; };
         modules = [ ./hosts/dubedary/configuration.nix ]; # if folder only given will use default.nix in that directory
       };
       exemplry = nixpkgs.lib.nixosSystem {

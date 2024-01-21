@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, myappattribute,... }: {
   services.xserver.enable = true;  # Enable the X11 windowing system.
   services.xserver.displayManager.gdm.enable = true;  # login display manager https://unix.stackexchange.com/questions/131496/what-is-lightdm-and-gdm
   services.xserver.desktopManager.gnome.enable = true; # Enable the GNOME Desktop Environment. 
@@ -22,5 +22,6 @@
     xclip
   ];
   programs.gnupg.agent = { enable = true; }; # https://github.com/NixOS/nixpkgs/issues/210375 # pinentryFlavor = "gtk2"; # enableSSHSupport = true;
-  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nil bitwarden-cli ]; # https://github.com/NixOS/nixpkgs/issues/271722   
+  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nil bitwarden-cli ]
+                                           ++ [ myappattribute.packages.x86_64-linux.default ]; # https://github.com/NixOS/nixpkgs/issues/271722   
 }
