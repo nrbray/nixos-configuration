@@ -11,7 +11,7 @@
     ../../modules/bare_metal.nix
     ../../modules/system.nix
     ../../users/nrb.nix
-    # ../../users/git.nix
+    ../../users/git.nix
   ];
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
