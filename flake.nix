@@ -1,7 +1,7 @@
 { /*  Canonical example? https://nixos-and-flakes.thiscute.world/nixos-with-flakes/modularize-the-configuration https://github.com/LongerHV/nixos-configuration/blob/master/flake.nix */
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-  inputs = {
-      myappattribute.url="git+file:///home/nrb/dir/work/myappflakedir";
+  inputs = { # "github:nrbray/mtd-vat-cli/NixOS"
+      myappattribute.url="git+file:///home/nrb/dir/work/mtd-vat-cli/";
   };
   outputs = { self, nixpkgs, myappattribute }: {
     nixosConfigurations = {
