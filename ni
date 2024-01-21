@@ -254,4 +254,8 @@ incredible-pattern () {
 # . ni; incredible-pattern dubedary 192.168.8.117 --forcenoporecelain 
 # . ni; incredible-pattern greatbar 51.195.200.156 --forcenoporecelain 
 # . ni; incredible-pattern mailhost to1.uk --forcenoporecelain 
+# nrb# cd ~/dir/work/Infra/nixos-configuration; sudo nixos-rebuild switch --flake .#mintanin
+
+# todo: trust mintanin root with pasword locked ssh key: ssh-keygen, .ssh/config 
+# todo: rotate ssh keys 
 
