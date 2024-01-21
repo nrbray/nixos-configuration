@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, myappattribute, ... }: {
   imports = [
     ./hardware-configuration.nix 
     ./trust.nix 
@@ -11,7 +11,7 @@
     ../../users/git.nix
   ];
   system.stateVersion = "20.09"; # Did you read the comment?
-  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass ];
+  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass ] ++ [ myappattribute.packages.x86_64-linux.default ];
   boot = {
     initrd.luks.devices = {
       root = {
