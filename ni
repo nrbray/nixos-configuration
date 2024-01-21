@@ -242,7 +242,7 @@ git_chown_on_avingate () {
 
 incredible-pattern () { # . ni; incredible-pattern avingate 192.168.8.103 --force [--init]
   if [ "${3}" != "--force" ]; then  [ -z "$(git status --porcelain)" ] || return 1; fi # throw git 
-  if [ "${3}" = "--init" ]; then ssh root@192.168.8.103 -- "git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ${PWD##*/}"; return 1; fi
+  if [ "${3}" = "--init" ]; then ssh root@"${2}" -- "git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ${PWD##*/}"; return 1; fi
   git push;
   ssh root@"${2}" --  "cd ~/${PWD##*/}; pwd; git pull && nixos-rebuild switch --flake .#${1}";   
 };
