@@ -240,13 +240,17 @@ git_chown_on_avingate () {
   git remote set-url --delete --push origin ssh://nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
 };
 
-incredible-pattern () { # . ni; incredible-pattern avingate 192.168.8.103 --force [--clone] [--gitshell]
-  if [ "${3}" != "--force" ]; then  [ -z "$(git status --porcelain)" ] || return 1; fi # throw git 
-  if [ "${3}" = "--clone" ]; then ssh root@"${2}" -- "git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ${PWD##*/}"; return 1; fi
-  if [ "${3}" = "--gitshell" ]; then ssh root@"${2}" -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; return 1; fi
-  # if [ "${3}" = "--gitshell" ]; then ssh root@"${2}" -- "git remote set-url --push origin /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; return 1; fi
+incredible-pattern () { 
+  # . ni; incredible-pattern mchine ip4.address [--forcenoporecelain ][--remotecloneasroot] [--remoteinitbare] [--addpushurltoremote]
+  if [ "${3}" = "--remotecloneasroot" ]; then ssh root@"${2}" -- "git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ${PWD##*/}"; return 1; fi
+  if [ "${3}" = "--remoteinitbare" ]; then ssh root@"${2}" -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; return 1; fi
+  if [ "${3}" = "--addpushurltoremote" ]; then git remote set-url --add --push origin "ssh://git@"${2}"/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git"; return 1; fi
+  if [ "${3}" != "--forcenoporecelain" ]; then  [ -z "$(git status --porcelain)" ] || return 1; fi # throw git 
   git push; 
-  ssh root@"${2}" --  "cd ~/${PWD##*/}; pwd; git pull && nixos-rebuild switch --flake .#${1}";   
+  ssh root@"${2}" --  "cd ~/${PWD##*/}; pwd; git pull --set-upstream "/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git" && nixos-rebuild switch --flake .#${1}";   
 };
-# . ni; incredible-pattern dubedary 192.168.8.117 --force 
+# . ni; incredible-pattern avingate 192.168.8.103 --forcenoporecelain 
+# . ni; incredible-pattern dubedary 192.168.8.117 --forcenoporecelain 
+# . ni; incredible-pattern greatbar 51.195.200.156 --forcenoporecelain 
+# . ni; incredible-pattern mailhost to1.uk --remoteinitbare 
 

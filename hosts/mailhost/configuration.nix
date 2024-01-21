@@ -7,6 +7,7 @@
     ../../modules/system.nix 
     ../../modules/mail.nix 
     ../../modules/webpages.nix 
+    ../../users/git.nix
   ];
   system.stateVersion = "23.11";
   zramSwap.enable = true;
