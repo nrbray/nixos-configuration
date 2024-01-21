@@ -240,10 +240,12 @@ git_chown_on_avingate () {
   git remote set-url --delete --push origin ssh://nrb@10.100.0.3:/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git
 };
 
-incredible-pattern () { # . ni; incredible-pattern avingate 192.168.8.103 --force [--init]
+incredible-pattern () { # . ni; incredible-pattern avingate 192.168.8.103 --force [--clone] [--gitshell]
   if [ "${3}" != "--force" ]; then  [ -z "$(git status --porcelain)" ] || return 1; fi # throw git 
-  if [ "${3}" = "--init" ]; then ssh root@"${2}" -- "git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ${PWD##*/}"; return 1; fi
-  git push;
+  if [ "${3}" = "--clone" ]; then ssh root@"${2}" -- "git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ${PWD##*/}"; return 1; fi
+  if [ "${3}" = "--gitshell" ]; then ssh root@"${2}" -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; return 1; fi
+  # if [ "${3}" = "--gitshell" ]; then ssh root@"${2}" -- "git remote set-url --push origin /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; return 1; fi
+  git push; 
   ssh root@"${2}" --  "cd ~/${PWD##*/}; pwd; git pull && nixos-rebuild switch --flake .#${1}";   
 };
 # . ni; incredible-pattern dubedary 192.168.8.117 --force 
