@@ -73,15 +73,16 @@
       "locked": {
         "lastModified": 1705859420,
         "narHash": "sha256-4gqVtPei9DqazvGv/nc8IkyZjNwkAOWejLfoPTHQPEk=",
-        "ref": "refs/heads/NixOS",
+        "owner": "nrbray",
+        "repo": "mtd-vat-cli",
         "rev": "861ad5956622a9089eacc4fae46639eefc0f020f",
-        "revCount": 25,
-        "type": "git",
-        "url": "file:///home/nrb/dir/work/mtd-vat-cli/"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/nrb/dir/work/mtd-vat-cli/"
+        "owner": "nrbray",
+        "ref": "NixOS",
+        "repo": "mtd-vat-cli",
+        "type": "github"
       }
     },
     "nixpkgs": {
