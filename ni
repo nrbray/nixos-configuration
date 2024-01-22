@@ -259,3 +259,17 @@ incredible-pattern () {
 # todo: trust mintanin root with pasword locked ssh key: ssh-keygen, .ssh/config 
 # todo: rotate ssh keys 
 
+sharegit () { 
+  # . ni; sharegit nixosConfig ip4.address [--forcenoporecelain ][--1_remoteinitbare] [--2_remoteaddorigin] [--3_addpushurltoremote] [--4_remotecloneasroot]
+  # if [ "${3}" != "--forcenoporecelain" ]; then  [ -z "$(git status --porcelain)" ] || return 1; fi # throw git 
+  if [ "${3}" = "--4_remotecloneasroot" ]; then ssh "${2}" -- "\
+    mkdir -p ~/dir/git/${PWD##*/}; \
+    git clone /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git ~/dir/git/${PWD##*/}"; return 1; fi
+  if [ "${3}" = "--1_remoteinitbare" ]; then ssh root@"${2}" -- "git init --initial-branch=main --bare /srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; chown -R git:git /srv/local/git/*"; return 1; fi
+  if [ "${3}" = "--3_addpushurltoremote" ]; then git remote set-url --add --push origin "ssh://git@"${2}"/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git"; return 1; fi
+  if [ "${3}" = "--2_remoteaddorigin" ]; then git remote add origin ssh://git@"${2}"/srv/local/git/$(git rev-list --parents HEAD | tail -1)_${PWD##*/}.git; return 1; fi
+  # also needs upstream??
+  git push; 
+  ssh "${2}" --  "cd ~/dir/git/${PWD##*/}; pwd; git pull";   
+};
+
