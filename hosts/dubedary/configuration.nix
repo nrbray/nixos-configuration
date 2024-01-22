@@ -1,5 +1,4 @@
-
-{ config, pkgs, ... }:
+{ config, pkgs, lib, myappattribute, ... }:
 {
   imports = [
     ./hardware-configuration.nix
