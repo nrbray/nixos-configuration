@@ -30,7 +30,7 @@
     ];
     forwards = {
       "info@aerotow.uk" =
-        [ "aerotowrevival@gmail.com" "antsmithbxl@gmail.com" "nigel@aeroplaying.uk" ];
+        [ "lornamaryhawkins@gmail.com" "aerotowrevival@gmail.com" "antsmithbxl@gmail.com" "nigel@aeroplaying.uk" ];
       "steven@aerotow.uk" = [ "aerotowrevival@gmail.com" ];
       "tony@aerotow.uk" = [ "antsmithbxl@gmail.com" ];
       "ac@to1.uk" = [ "ac.camborne@gmail.com" ];
