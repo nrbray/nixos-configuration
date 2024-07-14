@@ -5,6 +5,11 @@
   };
   outputs = { self, nixpkgs, myappattribute }: {
     nixosConfigurations = {
+      lojijove = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit myappattribute; };
+        modules = [ ./hosts/lojijove/configuration.nix ]; # if folder only given will use default.nix in that directory
+      };
       dubedary = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit myappattribute; };
