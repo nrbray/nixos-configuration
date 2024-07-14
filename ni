@@ -75,7 +75,7 @@ H.Swap_encryption () { # https://unix.stackexchange.com/questions/529047/is-ther
   sudo cryptsetup luksFormat --type luks2 ${swap_part} ${swap_keyfile} 
   sudo cryptsetup luksAddKey --key-file ${swap_keyfile} ${swap_part} # luks device with the same password as main 
   swap_luks_uuid=$(sudo cryptsetup luksUUID ${swap_part})
-  sudo cryptsetup luksOpen ${swap_part} ${swap_luks_uuid}--key-file ${swap_keyfile} 
+  sudo cryptsetup luksOpen ${swap_part} ${swap_luks_uuid} --key-file ${swap_keyfile} 
   sudo mkswap -L swap /dev/mapper/${swap_luks_uuid} # works with //dev/mapper not /dev/disk/by-uuid/...
   sudo swapon /dev/mapper/${swap_luks_uuid} # works with //dev/mapper not /dev/disk/by-uuid/...
   sudo cryptsetup config ${swap_part} --label luksswap  
