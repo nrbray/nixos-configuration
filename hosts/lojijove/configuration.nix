@@ -2,7 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    #../../modules/desktop.nix 
+    ../../modules/desktop.nix 
     ./trust.nix
     #./wireguard.nix
     #./syncthing.nix
