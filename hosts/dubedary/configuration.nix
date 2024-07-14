@@ -5,7 +5,7 @@
     ../../modules/desktop.nix 
     ./trust.nix
     ./wireguard.nix
-    #./syncthing.nix
+    ./syncthing.nix
     ./networking.nix
     ../../modules/bare_metal.nix
     ../../modules/system.nix

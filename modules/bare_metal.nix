@@ -2,6 +2,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # networking.wireless.networks."SoftRF-5ce608".psk = "12345678";
   networking.wireless.networks."Optus_B818_D3DA".psk = "9L24F93320B";
   networking.wireless.networks."Optus_B818_D3DA_5G".psk = "9L24F93320B";
   networking.wireless.networks."BTWholeHome-87M".psk = "aubergine0";

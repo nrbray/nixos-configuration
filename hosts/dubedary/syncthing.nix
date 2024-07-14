@@ -13,6 +13,7 @@
       guiAddress = "0.0.0.0:8384";
       overrideDevices = true;
       settings.devices = {  
+        "Nigel Bray - 632CPUB - dubedary" = { id = "632CPUB-BWVZ5SL-CAJWTNJ-3UTEQVG-RKWGQUJ-O6EIHHY-TWKHU6C-FJRCGQB"; };
         "Nigel Bray - D36E34G - mintanin" = { id = "D36E34G-HZLITDX-UHTERSJ-W2PE4ZJ-7HWLIJG-OUNY5KA-PHFNNCA-WPQ7FAN"; };
         "Nigel Bray - EPI2WFY - Hisense HNR320T" = { id = "EPI2WFY-PCWBH6P-QN3PYRX-IRBFNBI-MFSBFVR-NJTHUNO-CIVH4IS-2RCYFQR"; };
         "Nigel Bray - EZPA4DH - servmail" = { id = "EZPA4DH-7NG4U4Y-BJ2DNJH-NUHRZTU-EZVSMHL-GUG65WP-HINFLJY-5JZ3XA4"; };
@@ -24,6 +25,7 @@
       };
       overrideFolders = true;
       settings.folders = {
+        "org.xcsoar" = { path = "/home/nrb/dir/sync/org.xcsoar";  devices = [ "Nigel Bray - EPI2WFY - Hisense HNR320T" "Nigel Bray - 632CPUB - dubedary" ]; };  #ID = "org.xcsoar"; 
       };
     };
   };
