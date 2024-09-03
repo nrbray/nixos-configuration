@@ -175,11 +175,12 @@ Z.Go_back () {
     sudo systemctl status wpa_supplicant # I think a variation on below worked, escaping or replacing the quotes
     wpa_cli <<wpa_cli
 add_network 0
-set_network 0 ssid "BTWholeHome-87M"
-set_network 0 psk "aubergine0"
+set_network 0 ssid "MASIA SERRET 4""
+set_network 0 psk "masiaserret4"
 set_network 0 key_mgmt WPA-PSK
 enable_network 0
 wpa_cli
+# or --- wpa_supplicant -B -D nl80211,wext -i wlp10s0b1 -c <(wpa_passphrase $SSID $PASSWORD)
   ); set +x # https://dev.to/rpalo/bash-brackets-quick-reference-4eh6
 }
 

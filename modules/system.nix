@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: { # flakes clean-tmp-on-boot locale unfree select-pkgs root-sshd-certificate-only
   nix.settings.experimental-features = ["nix-command" "flakes"];
   boot.tmp.cleanOnBoot = true;
-  time.timeZone = "Europe/London";  # Set your time zone.
+  time.timeZone = "Europe/London";  # time.timeZone = "Europe/Paris";  # Set your time zone.
   i18n.defaultLocale = "en_GB.UTF-8";  # Select internationalisation properties.
   console = { keyMap = "uk"; };  # Configure console keymap # font = "Lat2-Terminus16"; 
   nixpkgs.config.allowUnfree = true;

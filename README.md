@@ -58,3 +58,12 @@ In the flake.nix we already see ```modules =[ ...``` and in configuration.nix ``
 `modules` is just the key used for the initial set of modules, but from there, inside the modules themselves, you bring in others with `imports`.
 
 [The Nix module system provides a parameter, imports, which accepts a list of .nix files and merges all the configuration defined in these files into the current Nix module.](https://nixos-and-flakes.thiscute.world/nixos-with-flakes/modularize-the-configuration)
+
+## ToDo
+
+1. Update exemplry to have fairly complete starting point 
+2. Note what needs changing for a specific instance: hostname, boot.initrd.luks.devices.
+3. Git clone this repo into local root instance for simple git pull of fixes after install 
+4. Remove redundancy trust /users/xxx
+5. Remove dubedary/desktop
+6. Initialise secret root and user passwords on first install "https://nixos.org/manual/nixos/stable/options#opt-users.users._name_.hashedPassword" 
