@@ -3,7 +3,7 @@
   services.xserver.displayManager.gdm.enable = true;  # login display manager https://unix.stackexchange.com/questions/131496/what-is-lightdm-and-gdm
   services.xserver.desktopManager.gnome.enable = true; # Enable the GNOME Desktop Environment. 
   services.xserver = { xkb.layout = "gb"; xkb.variant = ""; };  # Configure keymap in X11
-  sound.enable = true;  # Enable sound with pipewire.
+  # sound.enable = true;  # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -14,7 +14,7 @@
   };
   users.users.nrb.packages = with pkgs; [
     tdesktop 
-    gnome3.geary 
+    gnome.geary 
     vscodium 
     bitwarden 
     fractal
