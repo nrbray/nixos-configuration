@@ -35,6 +35,7 @@
       address = ["10.100.0.2/24"];            # { publicKey = "K8ZWWNRf6wFhGQ1fpewNelM5jOadRSOK9OpakmfcnV0="; allowedIPs = [ "10.100.0.1/32" ]; } # servmail 
       DHCP = "no";
       # gateway = [ "10.100.0.1" ]; # sudo ip route add 51.195.200.156 via 192.168.8.1 dev wlp4s0; sudo ip route del default via 192.168.8.1 dev wlp4s0; sudo ip route add default via 10.100.0.1 dev wg0; ip r
+      # sudo ip route del default; sudo ip route add default via 192.168.8.1 dev wlp4s0; ip r
       networkConfig = {
         IPv6AcceptRA = false;
       };
