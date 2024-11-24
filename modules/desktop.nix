@@ -15,13 +15,15 @@
   users.users.nrb.packages = with pkgs; [
     tdesktop 
     gnome3.geary 
-    lapce vscodium 
+    vscodium 
     bitwarden 
-    alacritty 
     fractal
     xclip
+    # jujutsu
   ];
   programs.gnupg.agent = { enable = true; }; # https://github.com/NixOS/nixpkgs/issues/210375 # pinentryFlavor = "gtk2"; # enableSSHSupport = true;
-  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nil bitwarden-cli ]
-                                           ++ [ myappattribute.packages.x86_64-linux.default ]; # https://github.com/NixOS/nixpkgs/issues/271722   
+  environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nil ]
+                                           ++ [ myappattribute.packages.x86_64-linux.default ]
+                                           ++ [ rage rsync git tmux ripgrep kalker tree unzip  ]; 
+                                           #  bitwarden-cli helix  # https://github.com/NixOS/nixpkgs/issues/271722   
 }
