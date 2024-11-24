@@ -24,6 +24,8 @@
   programs.gnupg.agent = { enable = true; }; # https://github.com/NixOS/nixpkgs/issues/210375 # pinentryFlavor = "gtk2"; # enableSSHSupport = true;
   environment.systemPackages = with pkgs; [ jq wget bind host traceroute nmap ethtool pass nil ]
                                            ++ [ myappattribute.packages.x86_64-linux.default ]
-                                           ++ [ rage rsync git tmux ripgrep kalker tree unzip  ]; 
+                                           ++ [ rage rsync git tmux ripgrep kalker tree unzip  ]; # duckdb halloy helix
                                            #  bitwarden-cli helix  # https://github.com/NixOS/nixpkgs/issues/271722   
+  nixpkgs.config.allowUnfree = true;
+  # programs.mosh.enable = true; # Opens UDP ports 60000 ... 61000
 }

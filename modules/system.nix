@@ -4,9 +4,9 @@
   time.timeZone = "Europe/London";  # time.timeZone = "Europe/Paris";  # Set your time zone.
   i18n.defaultLocale = "en_GB.UTF-8";  # Select internationalisation properties.
   console = { keyMap = "uk"; };  # Configure console keymap # font = "Lat2-Terminus16"; 
-  nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ rage rsync git tmux ripgrep kalker tree unzip ]; # duckdb halloy helix
-  programs.mosh.enable = true; # Opens UDP ports 60000 ... 61000
+  # nixpkgs.config.allowUnfree = true;
+  # environment.systemPackages = with pkgs; [ rage rsync git tmux ripgrep kalker tree unzip ]; # duckdb halloy helix
+  # programs.mosh.enable = true; # Opens UDP ports 60000 ... 61000
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
