@@ -5,6 +5,12 @@
   };
   outputs = { self, nixpkgs, myappattribute }: {
     nixosConfigurations = {
+      retsnom = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit myappattribute; };
+        modules = [ ./hosts/retsnom/configuration_custom.nix ]; # if folder only given will use default.nix in that directory
+      };
+
       lojijove = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit myappattribute; };
