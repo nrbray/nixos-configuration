@@ -165,7 +165,7 @@ Z.Go_back () {
   elif [ -b ${1} ]; then 
     echo "Installation media is \"${1}\"" 
     curl --location --continue-at - --remote-name https://channels.nixos.org/nixos-23.11/latest-nixos-minimal-x86_64-linux.iso
-    echo "Press return to continue."; read; sudo dd if=latest-nixos-minimal-x86_64-linux.iso of="$1" bs=4M conv=fsync
+    echo "Press return to continue."; read; sudo dd bs=4M conv=fsync if=latest-nixos-minimal-x86_64-linux.iso of="$1" 
   else echo "Error: Parameter 1 must be a block device.  \"${1}\" is not."; fi
 }
 
@@ -175,8 +175,8 @@ Z.Go_back () {
     sudo systemctl status wpa_supplicant # I think a variation on below worked, escaping or replacing the quotes
     wpa_cli <<wpa_cli
 add_network 0
-set_network 0 ssid "MASIA SERRET 4""
-set_network 0 psk "masiaserret4"
+set_network 0 ssid "Optus_B818_D3DA_5G"
+set_network 0 psk "9L24F93320B"
 set_network 0 key_mgmt WPA-PSK
 enable_network 0
 wpa_cli
