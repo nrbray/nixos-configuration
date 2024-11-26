@@ -1,15 +1,11 @@
 { config, pkgs, lib, myappattribute, ... }:
 {
   # host specific
-    # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-#  boot.loader.efi.efiSysMountPoint = "/boot";
-#  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
-#  boot.initrd.luks.devices."dbae75f6-e73a-483b-8d31-9e9f27833387".device = "/dev/disk/by-uuid/dbae75f6-e73a-483b-8d31-9e9f27833387";
-#  boot.initrd.luks.devices."dbae75f6-e73a-483b-8d31-9e9f27833387".keyFile = "/crypto_keyfile.bin";
   networking.hostName = "retsnom";
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
   # sudo nix-store --verify --repair --check-contents
 
   imports = [
